@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h1>
+        {{haha}}
+    </h1>
+    <form action="/uploadFile" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" id="file" value="" multiple="multiple" />
+        <input type="submit" value="提交"/>
+    </form>
+    <input type="hidden" value="{{content}}" id="content">
+    <script src="./javascripts/jquery.js"></script>
+    <script>
+        $(function(){
+            console.log(JSON.parse($('#content').val()))
+            $.ajax({
+                url: '/getUserInfo',
+                method: 'get',
+                success: function(res){
+                    console.log(res)
+                },
+                error: function(err){
+                    console.log(err)
+                }
+            })
+         
+            $.ajax({
+                url: '/setUserInfo',
+                method: 'post',
+                data:{
+                    userName: '测试',
+                    password: '123456'
+                },
+                dataType: 'json',
+                success: function(res){
+                    console.log(res)
+                },
+                error: function(err){
+                    console.log(err)
+                }
+            })
+
+            // $.ajax({
+            //     url: '/userInfoByName',
+            //     method: 'get',
+            //     data: {
+            //         userName: '朱江哈哈'
+            //     },
+            //     success: function(res){
+            //         console.log(res)
+            //     },
+            //     error: function(err){
+            //         console.log(err)
+            //     }
+            // })
+
+            // $.ajax({
+            //     url: '/deleteUserInfo',
+            //     method: 'delete',
+            //     data: {
+            //         userName: 'hhaa'
+            //     },
+            //     success: function(res){
+            //         console.log(res)
+            //     },
+            //     error: function(err){
+            //         console.log(err)
+            //     }
+            // })
+
+            // $.ajax({
+            //     url: '/updateUserInfo',
+            //     method: 'put',
+            //     data: {
+            //         userName: '朱江'
+            //     },
+            //     success: function(res){
+            //         console.log(res)
+            //     },
+            //     error: function(err){
+            //         console.log(err)
+            //     }
+            // })
+            
+        })
+    </script>
+</body>
+</html>
