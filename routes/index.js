@@ -5,7 +5,8 @@ const config = require('../config.js')
 const fs = require('fs')
 const path = require('path')
 const koaBody = require('koa-body')
-const qs = require('qs')
+const { token } = require('./jwt.js')
+
 router.get('/', async (ctx, next) => {
     var httpRequest = function (api) {
         return new Promise(function (resolve, reject) {
@@ -21,7 +22,7 @@ router.get('/', async (ctx, next) => {
                 console.log(err)
             })
     }
-    var data = await httpRequest('http://172.16.0.121:3030/getUserInfo')
+    var data = await httpRequest('http://localhost:3030/getUserInfo')
     await ctx.render('index', {
         haha: '😆😆!',
         content: data
@@ -176,20 +177,27 @@ router.post('/uploadFile', async (ctx, next) => {
 //login登录鉴权
 router.post('/login', async (ctx, next) => {
     let req = ctx.request.body
-    console.log(req)
-    await query(`insert into userInfo (userName, password) values ('${req.userName}', '${req.password}')`)
-        .then(res => {
-            ctx.body = {
-                errcode: 0,
-                msg: 'success'
-            }
-        })
-        .catch(err => {
-            ctx.body = {
-                errcode: -1,
-                msg: 'fail'
-            }
-        })
+    const accessToken = token(req)
+    console.log(accessToken)
+    ctx.body = {
+        errcode: 0,
+        data: accessToken,
+        msg: 'success'
+    }
+
+    // await query(`insert into userInfo (userName, password) values ('${req.userName}', '${req.password}')`)
+    //     .then(res => {
+    //         ctx.body = {
+    //             errcode: 0,
+    //             msg: 'success'
+    //         }
+    //     })
+    //     .catch(err => {
+    //         ctx.body = {
+    //             errcode: -1,
+    //             msg: 'fail'
+    //         }
+    //     })
 })
 
 module.exports = router

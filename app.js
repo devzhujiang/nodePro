@@ -7,10 +7,12 @@ const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
 const koaBody = require('koa-body')
 const path = require('path')
+const jwtKoa = require('koa-jwt')
 
 const index = require('./routes/index')
 const users = require('./routes/users')
 
+const secret = 'jwt login'
 
 // error handler
 onerror(app)
@@ -19,9 +21,18 @@ onerror(app)
 app.use(bodyparser({
     enableTypes: ['json', 'form', 'text']
 }))
+
+//jwt鉴权
+// app.use(jwtKoa({
+//     secret
+// }).unless({
+//     path: ['/login'] //数组中的路径不需要通过jwt验证
+// }))
+
 app.use(json())
 app.use(logger())
 app.use(require('koa-static')(__dirname + '/public'))
+
 
 // 添加处理模板的中间件
 app.use(views(__dirname + '/views', {
@@ -35,6 +46,7 @@ app.use(async (ctx, next) => {
     const ms = new Date() - start
     console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
 })
+
 
 //文件上传 --koa-body中间件要放在路由之前
 // app.use(koaBody({

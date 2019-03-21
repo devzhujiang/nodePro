@@ -19,32 +19,32 @@
     <script>
         $(function(){
             console.log(JSON.parse($('#content').val()))
-            $.ajax({
-                url: '/getUserInfo',
-                method: 'get',
-                success: function(res){
-                    console.log(res)
-                },
-                error: function(err){
-                    console.log(err)
-                }
-            })
+            // $.ajax({
+            //     url: '/getUserInfo',
+            //     method: 'get',
+            //     success: function(res){
+            //         console.log(res)
+            //     },
+            //     error: function(err){
+            //         console.log(err)
+            //     }
+            // })
          
-            $.ajax({
-                url: '/setUserInfo',
-                method: 'post',
-                data:{
-                    userName: '测试',
-                    password: '123456'
-                },
-                dataType: 'json',
-                success: function(res){
-                    console.log(res)
-                },
-                error: function(err){
-                    console.log(err)
-                }
-            })
+            // $.ajax({
+            //     url: '/setUserInfo',
+            //     method: 'post',
+            //     data:{
+            //         userName: '测试',
+            //         password: '123456'
+            //     },
+            //     dataType: 'json',
+            //     success: function(res){
+            //         console.log(res)
+            //     },
+            //     error: function(err){
+            //         console.log(err)
+            //     }
+            // })
 
             // $.ajax({
             //     url: '/userInfoByName',
@@ -87,6 +87,23 @@
             //         console.log(err)
             //     }
             // })
+
+
+            $.ajax({
+                url: '/login',
+                method: 'post',
+                data:{
+                    userName: '测试',
+                    password: '123456'
+                },
+                dataType: 'json',
+                success: function(res){
+                    console.log(res)
+                },
+                error: function(err){
+                    console.log(err)
+                }
+            })
             
         })
     </script>
